@@ -7,6 +7,7 @@ const prev_mth_element = document.querySelector('.date-picker .dates .month .pre
 const days_element = document.querySelector('.date-picker .dates .days');
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 let date = new Date();
 let day = date.getDate();
@@ -59,10 +60,10 @@ function goToPrevMonth (e) {
 
 function populateDates (e) {
 	days_element.innerHTML = '';
-	let amount_days = 31;
+	let amount_days = daysInMonth[month];
 
-	if (month == 1) {
-		amount_days = 28;
+	if (isLeapYear(year) && month === 1) {
+		amount_days = 29;
 	}
 
 	for (let i = 0; i < amount_days; i++) {
@@ -100,6 +101,7 @@ function checkEventPathForClass (path, selector) {
 	
 	return false;
 }
+
 function formatDate (d) {
 	let day = d.getDate();
 	if (day < 10) {
@@ -114,4 +116,8 @@ function formatDate (d) {
 	let year = d.getFullYear();
 
 	return day + ' / ' + month + ' / ' + year;
+}
+
+function isLeapYear (year) {
+	return year % 100 === 0 ? year % 400 === 0 : year % 4 === 0;
 }
